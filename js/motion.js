@@ -70,7 +70,6 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   let introActive = true;
   let pendingIntroDelta = 0;
   let introFrame = 0;
-  let touchStartY = 0;
   const visibleScenes = new Set();
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
@@ -81,7 +80,7 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     const welcomeScale = 1.0 - introProgress * 0.7;
     welcome.style.transform = `scale(${welcomeScale})`;
     welcome.style.opacity = '1';
-    welcome.style.pointerEvents = introActive ? 'auto' : 'none';
+    welcome.style.pointerEvents = mobileQuery.matches ? 'none' : (introActive ? 'auto' : 'none');
   }
 
   function settleIntro() {
@@ -135,21 +134,6 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
         advanceIntro(delta);
       });
     }
-  }, { passive: false });
-
-  window.addEventListener('touchstart', event => {
-    if (!introActive || !enabled) return;
-    touchStartY = event.touches[0].clientY;
-  }, { passive: true });
-
-  window.addEventListener('touchmove', event => {
-    if (!introActive || !enabled) return;
-    const currentY = event.touches[0].clientY;
-    const deltaY = touchStartY - currentY;
-    if (Math.abs(deltaY) < 1) return;
-    event.preventDefault();
-    touchStartY = currentY;
-    advanceIntro(deltaY / Math.max(innerHeight * 0.9, 1));
   }, { passive: false });
 
   window.addEventListener('keydown', event => {
@@ -312,7 +296,18 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     frame = 0;
     if (!enabled) return;
     const mobile = mobileQuery.matches;
-    if (introActive) paintIntro();
+    if (mobile && introActive) {
+      introProgress = clamp(window.scrollY / Math.max(innerHeight * 0.55, 1));
+      if (introProgress >= 1) {
+        introActive = false;
+        window.scrollTo(0, 0);
+        settleIntro();
+      } else {
+        paintIntro();
+      }
+    } else if (introActive) {
+      paintIntro();
+    }
     if (visibleScenes.has(hero)) {
       const bounds = hero.getBoundingClientRect();
       const progress = clamp(-bounds.top / Math.max(bounds.height, 1));
