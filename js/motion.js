@@ -89,6 +89,7 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     document.documentElement.classList.add('intro-settling');
     welcome.classList.remove('intro-overlay');
     const naturalRect = welcome.getBoundingClientRect();
+    welcome.classList.add('intro-overlay');
     const scaleX = overlayRect.width / Math.max(naturalRect.width, 1);
     const scaleY = overlayRect.height / Math.max(naturalRect.height, 1);
     const offsetX = overlayRect.left + overlayRect.width / 2 - (naturalRect.left + naturalRect.width / 2);
@@ -96,6 +97,7 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     welcome.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) scale(${scaleX}, ${scaleY})`;
     void welcome.offsetWidth;
     requestAnimationFrame(() => {
+      welcome.classList.remove('intro-overlay');
       welcome.style.transform = 'none';
       welcome.style.pointerEvents = 'none';
     });
