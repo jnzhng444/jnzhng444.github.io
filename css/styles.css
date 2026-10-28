@@ -54,6 +54,8 @@ svg { display: block; max-width: 100%; }
 .muted { color: var(--muted); }
 .small-text { font-size: 12px; line-height: 1.8; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.intro-active body::before { content: ''; position: fixed; inset: 0; z-index: 20; background: var(--black); pointer-events: none; transition: opacity .72s cubic-bezier(.22, .75, .2, 1); }
+.intro-active.intro-settling body::before { opacity: 0; }
 .skip-link { position: fixed; top: 12px; left: 16px; padding: 12px 20px; background: var(--green); color: var(--black); z-index: 100; transform: translateY(-180%); }
 .skip-link:focus { transform: none; }
 .status-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--green); margin-right: 10px; vertical-align: middle; }
@@ -85,6 +87,7 @@ svg { display: block; max-width: 100%; }
   position: relative;
   isolation: isolate;
 }
+.hero { isolation: auto; }
 .hero::before, .featured-project::before, .roots-banner::before, .about-section::before,
 .skills-section::before, .contact-section::before, .additional-projects::before {
   content: '';
@@ -171,7 +174,11 @@ svg { display: block; max-width: 100%; }
 .hero-topline { display: flex; justify-content: space-between; font-size: 11.5px; }
 .hero-topline > span:last-child { color: var(--muted); }
 .hero-main { display: grid; grid-template-columns: 1.16fr 1fr; align-items: center; gap: 30px; margin: 27px 0 45px; }
-.welcome-composition { min-width: 0; position: relative; z-index: 1; }
+.welcome-composition { min-width: 0; position: relative; z-index: 1; transform-origin: left top; will-change: transform; }
+.welcome-composition.intro-overlay { position: fixed; inset: 0; z-index: 25; display: grid; place-content: center; padding: 40px; background: transparent; transform-origin: center; transform: translateZ(0); }
+.welcome-composition.intro-overlay .welcome-title { justify-content: center; font-size: min(48vw, 65vh); }
+.welcome-composition.intro-overlay .welcome-caption { justify-content: center; }
+.welcome-composition.intro-settling { transform-origin: center; transition: transform .72s cubic-bezier(.22, .75, .2, 1); }
 .welcome-title { font-family: 'Noto Sans SC Welcome', 'Microsoft YaHei', 'PingFang SC', sans-serif; font-weight: 900; font-size: clamp(170px, 21vw, 290px); line-height: 1.12; color: var(--green); letter-spacing: 0; display: flex; }
 .character-mask { display: block; overflow: clip; }
 .character-mask > span { display: block; }

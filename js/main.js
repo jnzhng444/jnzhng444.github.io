@@ -5,6 +5,16 @@ import { featuredProjects } from './data.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 
+if (window.location.hash) {
+  window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  let homeFrames = 0;
+  const forceHome = () => {
+    window.scrollTo(0, 0);
+    if (homeFrames++ < 60) window.requestAnimationFrame(forceHome);
+  };
+  forceHome();
+}
+
 // Static HTML is already complete. Local data also refreshes it at runtime.
 $('#featured-projects').innerHTML = featuredMarkup();
 $('#skills-list').innerHTML = skillsMarkup();
@@ -239,5 +249,7 @@ import('./motion.js').then(({ initMotion }) => {
   });
 }).catch(() => {
   document.documentElement.classList.remove('motion-enabled', 'motion-forced', 'scroll-story');
+  document.documentElement.classList.remove('intro-active', 'intro-settling');
+  document.querySelector('.welcome-composition')?.classList.remove('intro-overlay');
   $('#motion-toggle').hidden = true;
 });

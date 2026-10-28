@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="intro-active">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,12 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jnzhng444.github.io/">
   <title>Jian Yong Zheng Wu · Welcome to my lab</title>
+  <script>
+    window.history.scrollRestoration = 'manual';
+    if (window.location.hash) window.location.replace(window.location.pathname + window.location.search);
+    else window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
+  </script>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./assets/fonts/SpaceGrotesk-Variable.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="./assets/fonts/NotoSansSC-Welcome-900.ttf" as="font" type="font/ttf" crossorigin>
@@ -29,7 +35,7 @@
     <section class="hero container" id="home" aria-labelledby="hero-title">
       <div class="hero-topline eyebrow"><span><i class="status-dot" aria-hidden="true"></i> A PERSONAL DIGITAL LAB</span><span>PORTFOLIO / 2026</span></div>
       <div class="hero-main">
-        <div class="welcome-composition" data-ambient>
+        <div class="welcome-composition intro-overlay" data-ambient>
           <h1 id="hero-title" class="welcome-title" lang="zh-Hans" aria-label="欢迎"><span class="character-mask"><span><span class="welcome-ink">欢</span></span></span><span class="character-mask"><span><span class="welcome-ink">迎</span></span></span></h1>
           <div class="welcome-caption"><span class="mono">WELCOME</span><span class="hairline" aria-hidden="true"></span><span class="mono">TO MY CORNER OF THE INTERNET.</span></div>
         </div>

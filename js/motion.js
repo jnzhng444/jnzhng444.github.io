@@ -66,10 +66,85 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   let frame = 0;
   let enabled = false;
   let storyEnabled = false;
+  let introProgress = 0;
+  let introActive = true;
+  let pendingIntroDelta = 0;
+  let introFrame = 0;
   const visibleScenes = new Set();
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
   window._scrambleText = scramble;
+  welcome.classList.add('intro-overlay');
+
+  function paintIntro() {
+    const welcomeScale = 1.0 - introProgress * 0.7;
+    welcome.style.transform = `scale(${welcomeScale})`;
+    welcome.style.opacity = '1';
+    welcome.style.pointerEvents = introActive ? 'auto' : 'none';
+  }
+
+  function settleIntro() {
+    const overlayRect = welcome.getBoundingClientRect();
+    welcome.classList.add('intro-settling');
+    document.documentElement.classList.add('intro-settling');
+    welcome.classList.remove('intro-overlay');
+    const naturalRect = welcome.getBoundingClientRect();
+    const scaleX = overlayRect.width / Math.max(naturalRect.width, 1);
+    const scaleY = overlayRect.height / Math.max(naturalRect.height, 1);
+    const offsetX = overlayRect.left + overlayRect.width / 2 - (naturalRect.left + naturalRect.width / 2);
+    const offsetY = overlayRect.top + overlayRect.height / 2 - (naturalRect.top + naturalRect.height / 2);
+    welcome.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) scale(${scaleX}, ${scaleY})`;
+    requestAnimationFrame(() => {
+      welcome.style.transform = 'none';
+      welcome.style.pointerEvents = 'none';
+    });
+    welcome.addEventListener('transitionend', () => {
+      welcome.classList.remove('intro-settling');
+      document.documentElement.classList.remove('intro-active', 'intro-settling');
+      welcome.style.removeProperty('transform');
+      welcome.style.removeProperty('opacity');
+      welcome.style.removeProperty('pointer-events');
+    }, { once: true });
+  }
+
+  function advanceIntro(amount) {
+    if (!introActive || !enabled) return false;
+    introProgress = clamp(introProgress + amount);
+    if (introProgress >= 1) {
+      introActive = false;
+      settleIntro();
+    } else {
+      paintIntro();
+    }
+    return true;
+  }
+
+  window.addEventListener('wheel', event => {
+    if (!introActive || !enabled) return;
+    event.preventDefault();
+    pendingIntroDelta += event.deltaY / Math.max(innerHeight * 0.8, 1);
+    if (!introFrame) {
+      introFrame = requestAnimationFrame(() => {
+        introFrame = 0;
+        const delta = pendingIntroDelta;
+        pendingIntroDelta = 0;
+        advanceIntro(delta);
+      });
+    }
+  }, { passive: false });
+
+  window.addEventListener('keydown', event => {
+    if (!introActive || !enabled) return;
+    const forwardKeys = ['ArrowDown', 'PageDown', ' ', 'Enter'];
+    const backwardKeys = ['ArrowUp', 'PageUp'];
+    if (forwardKeys.includes(event.key)) {
+      event.preventDefault();
+      advanceIntro(event.key === ' ' || event.key === 'PageDown' ? 0.5 : 0.2);
+    } else if (backwardKeys.includes(event.key)) {
+      event.preventDefault();
+      advanceIntro(-0.2);
+    }
+  });
 
   artifact.addEventListener('animationend', event => {
     if (event.animationName === 'object-in') root.classList.add('intro-complete');
@@ -218,11 +293,11 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     frame = 0;
     if (!enabled) return;
     const mobile = mobileQuery.matches;
+    if (introActive) paintIntro();
     if (visibleScenes.has(hero)) {
       const bounds = hero.getBoundingClientRect();
       const progress = clamp(-bounds.top / Math.max(bounds.height, 1));
       artifact.style.transform = `translate3d(0, ${progress * (mobile ? 12 : 55)}px, 0) rotate(${progress * (mobile ? 1 : 4)}deg) scale(${1 + progress * .035})`;
-      welcome.style.transform = `translate3d(0, ${-progress * (mobile ? 8 : 28)}px, 0)`;
       hero.style.setProperty('--layer-spread', `${progress * (mobile ? 8 : 22)}px`);
     }
     if (visibleScenes.has(compilerScene) && storyEnabled) {
@@ -248,6 +323,14 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   function updateMotion() {
     if (manuallyPaused || document.hidden) root.classList.add('intro-complete');
     enabled = !manuallyPaused && !document.hidden;
+    welcome.classList.toggle('intro-overlay', enabled && introActive);
+    if (!enabled) {
+      welcome.style.removeProperty('transform');
+      welcome.style.removeProperty('opacity');
+      welcome.style.removeProperty('pointer-events');
+    } else {
+      paintIntro();
+    }
     storyEnabled = storyQuery.matches && !root.classList.contains('project-browser-enabled');
     root.classList.add('motion-enabled', 'motion-forced');
     root.classList.toggle('motion-paused', !enabled);
