@@ -175,7 +175,7 @@ svg { display: block; max-width: 100%; }
 .hero-topline > span:last-child { color: var(--muted); }
 .hero-main { display: grid; grid-template-columns: 1.16fr 1fr; align-items: center; gap: 30px; margin: 27px 0 45px; }
 .welcome-composition { min-width: 0; position: relative; z-index: 1; transform-origin: left top; will-change: transform; }
-.welcome-composition.intro-overlay { position: fixed; inset: 0; z-index: 25; display: grid; place-content: center; padding: 40px; background: transparent; transform-origin: center; transform: translateZ(0); }
+.welcome-composition.intro-overlay { position: fixed; inset: 0; z-index: 25; display: grid; place-content: center; padding: 40px; background: transparent; transform-origin: center; transform: translateZ(0); touch-action: none; }
 .welcome-composition.intro-overlay .welcome-title { justify-content: center; font-size: min(48vw, 65vh); }
 .welcome-composition.intro-overlay .welcome-caption { justify-content: center; }
 .welcome-composition.intro-settling { transform-origin: center; transition: transform .72s cubic-bezier(.22, .75, .2, 1); }
