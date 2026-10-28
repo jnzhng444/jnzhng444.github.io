@@ -155,6 +155,11 @@ function selectProject(index, focus = false, focusTab = true) {
     if (!active) projectPanels[position].querySelectorAll('[data-ambient]').forEach(scene => scene.classList.remove('ambient-visible'));
   });
   updateCompilerPlayback();
+  const activeLabel = tabButtons[index]?.querySelector('span:last-child');
+  if (activeLabel && window._scrambleText) {
+    window._scrambleText(activeLabel, featuredProjects[index].tabLabel ?? featuredProjects[index].name, 220);
+  }
+  document.dispatchEvent(new Event('motion-statechange'));
   if (focus) {
     if (!focusTab) projectStatus.textContent = `${featuredProjects[index].name}. Project ${index + 1} of ${featuredProjects.length}.`;
     if (focusTab) tabButtons[index].focus({ preventScroll: true });

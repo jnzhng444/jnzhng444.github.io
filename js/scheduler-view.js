@@ -23,6 +23,7 @@ export function scheduleView(algorithm) {
       if (slot?.task === task.id) svg += `<rect x="${left + time * unit + 1}" y="${y + 5}" width="${unit - 2}" height="22" fill="${task.color}"><title>Task ${task.id}: ${time}–${time + 1}; job released ${slot.release}; deadline ${slot.deadline}</title></rect>`;
     });
   });
+  svg += `<g class="timeline-playhead" aria-hidden="true"><line x1="50" y1="25" x2="50" y2="124" stroke="#b6ff3b" stroke-width="1.5" stroke-dasharray="3 2"/><polygon points="46,23 54,23 50,29" fill="#b6ff3b"/></g>`;
   return {
     svg: svg + '</svg>',
     status: `${algorithm} · ${result.misses.length} deadline${result.misses.length === 1 ? '' : 's'} missed`,
