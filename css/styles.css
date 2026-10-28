@@ -763,9 +763,9 @@ thead { color: var(--green); }
   .hero { display: flex; flex-direction: column; padding-top: 30px; }
   .hero-topline { order: 0; font-size: 11px; gap: 15px; margin-bottom: 30px; }
   .hero-main { display: contents; }
-  .welcome-composition { order: 1; }
-  .welcome-title { font-size: clamp(138px, 43.7vw, 285px); line-height: 1.14; }
-  .welcome-caption { font-size: 11px; padding-top: 12px; gap: 16px; }
+  .welcome-composition { order: 1; width: calc(100% + 40px); margin-left: -20px; }
+  .welcome-title { justify-content: center; font-size: clamp(155px, 48vw, 310px); line-height: 1.14; }
+  .welcome-caption { justify-content: center; font-size: 11px; padding-top: 12px; gap: 16px; }
   .welcome-caption > span:first-child { font-size: 10px; }
   .welcome-caption > span:last-child { font-size: 10.5px; max-width: none; }
   .hairline { width: 29px; }
@@ -913,6 +913,7 @@ thead { color: var(--green); }
   .container { width: calc(100% - 32px); }
   .brand-name > span { display: none; }
   .nav-actions { gap: 6px; }
+  .welcome-composition { width: calc(100% + 32px); margin-left: -16px; }
   .welcome-title { font-size: 43vw; }
   .welcome-caption { gap: 10px; }
   .welcome-caption > span:last-child { font-size: 10px; }

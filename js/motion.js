@@ -94,6 +94,7 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     const offsetX = overlayRect.left + overlayRect.width / 2 - (naturalRect.left + naturalRect.width / 2);
     const offsetY = overlayRect.top + overlayRect.height / 2 - (naturalRect.top + naturalRect.height / 2);
     welcome.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) scale(${scaleX}, ${scaleY})`;
+    void welcome.offsetWidth;
     requestAnimationFrame(() => {
       welcome.style.transform = 'none';
       welcome.style.pointerEvents = 'none';
