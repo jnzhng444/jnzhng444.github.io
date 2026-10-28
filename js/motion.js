@@ -297,7 +297,7 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     if (!enabled) return;
     const mobile = mobileQuery.matches;
     if (mobile && introActive) {
-      introProgress = clamp(window.scrollY / Math.max(innerHeight * 0.55, 1));
+      introProgress = clamp(window.scrollY / Math.max(innerHeight * 0.3, 1));
       if (introProgress >= 1) {
         introActive = false;
         window.scrollTo(0, 0);

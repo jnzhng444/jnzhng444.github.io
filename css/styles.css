@@ -90,7 +90,7 @@ svg { display: block; max-width: 100%; }
 .hero { isolation: auto; }
 .hero::before, .featured-project::before, .roots-banner::before, .about-section::before,
 .skills-section::before, .contact-section::before, .additional-projects::before {
-  content: '';
+  content: 'SWIPE TO EXPLORE ↓';
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -769,6 +769,27 @@ thead { color: var(--green); }
   .welcome-caption > span:first-child { font-size: 10px; }
   .welcome-caption > span:last-child { font-size: 10.5px; max-width: none; }
   .hairline { width: 29px; }
+  .welcome-composition.intro-overlay::after {
+    content: 'SWIPE TO EXPLORE ↓';
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    padding-left: 12px;
+    border-left: 1px solid var(--green);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .12em;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-shadow: 0 0 8px #b6ff3b55;
+    transform: translateX(-50%);
+    animation: intro-scroll-line 1.8s ease-in-out infinite;
+  }
+  @keyframes intro-scroll-line {
+    0%, 100% { opacity: .55; transform: translate(-50%, 0); }
+    50% { opacity: 1; transform: translate(-50%, 6px); }
+  }
   .hero-introduction { order: 2; display: block; padding-top: 0; margin-top: 36px; }
   .hero-name { font-size: clamp(27px, 7.2vw, 42px); line-height: 1.2; }
   .hero-role { font-size: 14px; margin-top: 9px; }
