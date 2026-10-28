@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" fill="none" stroke="#b6ff3b" stroke-width="1.2">
+  <path d="m500 70 420 210-420 210L80 280Zm0 110L300 280l200 100 200-100ZM80 400l420 210 420-210M80 520l420 210 420-210M80 640l420 210 420-210M80 760l420 210 420-210"/>
+  <path d="M80 280v480M920 280v480M500 490v480M290 385v480M710 385v480M500 70v110" stroke-dasharray="4 10"/>
+  <g fill="#b6ff3b" stroke="none"><circle cx="80" cy="400" r="5"/><circle cx="920" cy="520" r="5"/><circle cx="500" cy="850" r="5"/></g>
+</svg>
