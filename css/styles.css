@@ -181,8 +181,8 @@ svg { display: block; max-width: 100%; }
 .welcome-composition.intro-overlay .welcome-title { animation: welcome-glow 6s ease-in-out infinite; }
 .welcome-composition.intro-overlay .welcome-ink { animation: welcome-sheen 7s ease-in-out infinite; }
 .welcome-composition.intro-settling { transform-origin: center; transition: transform .72s cubic-bezier(.22, .75, .2, 1); }
-.welcome-composition.intro-overlay::after {
-  content: 'SWIPE TO EXPLORE ↓';
+.intro-scroll-indicator { display: none; }
+.welcome-composition.intro-overlay .intro-scroll-indicator {
   position: absolute;
   left: 50%;
   bottom: 30px;
@@ -197,6 +197,15 @@ svg { display: block; max-width: 100%; }
   text-shadow: 0 0 8px #b6ff3b55;
   transform: translateX(-50%);
   animation: intro-scroll-line 1.8s ease-in-out infinite;
+}
+.intro-scroll-indicator i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 7px;
+  border-right: 1px solid var(--green);
+  border-bottom: 1px solid var(--green);
+  transform: translateY(-2px) rotate(45deg);
 }
 @keyframes intro-scroll-line {
   0%, 100% { opacity: .55; transform: translate(-50%, 0); }
@@ -792,6 +801,7 @@ thead { color: var(--green); }
   .welcome-caption > span:first-child { font-size: 10px; }
   .welcome-caption > span:last-child { font-size: 10.5px; max-width: none; }
   .hairline { width: 29px; }
+  .welcome-composition.intro-overlay .intro-scroll-indicator { display: block; }
   .hero-introduction { order: 2; display: block; padding-top: 0; margin-top: 36px; }
   .hero-name { font-size: clamp(27px, 7.2vw, 42px); line-height: 1.2; }
   .hero-role { font-size: 14px; margin-top: 9px; }
@@ -934,6 +944,13 @@ thead { color: var(--green); }
 }
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 760px) {
+    html.intro-scrolling .welcome-composition.intro-overlay .welcome-title {
+      filter: none;
+    }
+    html.intro-scrolling .welcome-composition.intro-overlay .welcome-ink {
+      background: none;
+      color: var(--green);
+    }
     .welcome-composition.intro-overlay .welcome-title {
       animation: none;
       filter: drop-shadow(0 0 10px #b6ff3b66) drop-shadow(0 0 24px #b6ff3b2b);

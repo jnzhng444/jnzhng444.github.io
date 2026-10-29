@@ -93,6 +93,7 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   let introActive = true;
   let pendingIntroDelta = 0;
   let introFrame = 0;
+  let safariScrollTimer = 0;
   const visibleScenes = new Set();
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
@@ -105,6 +106,12 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     welcome.style.opacity = '1';
     welcome.style.pointerEvents = mobileQuery.matches ? 'none' : (introActive ? 'auto' : 'none');
   }
+
+  document.addEventListener('click', event => {
+    if (!introActive) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
 
   function settleIntro() {
     const overlayRect = welcome.getBoundingClientRect();
@@ -357,6 +364,11 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   }
 
   function schedulePaint() {
+    if (mobileQuery.matches && introActive) {
+      root.classList.add('intro-scrolling');
+      clearTimeout(safariScrollTimer);
+      safariScrollTimer = setTimeout(() => root.classList.remove('intro-scrolling'), 140);
+    }
     if (enabled && visibleScenes.size && !frame) frame = requestAnimationFrame(paintScroll);
   }
 
@@ -368,8 +380,12 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
       welcome.style.removeProperty('transform');
       welcome.style.removeProperty('opacity');
       welcome.style.removeProperty('pointer-events');
-    } else {
+    } else if (introActive) {
       paintIntro();
+    } else {
+      welcome.style.removeProperty('transform');
+      welcome.style.removeProperty('opacity');
+      welcome.style.pointerEvents = 'none';
     }
     storyEnabled = storyQuery.matches && !root.classList.contains('project-browser-enabled');
     root.classList.add('motion-enabled', 'motion-forced');
