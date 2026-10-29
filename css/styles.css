@@ -174,10 +174,12 @@ svg { display: block; max-width: 100%; }
 .hero-topline { display: flex; justify-content: space-between; font-size: 11.5px; }
 .hero-topline > span:last-child { color: var(--muted); }
 .hero-main { display: grid; grid-template-columns: 1.16fr 1fr; align-items: center; gap: 30px; margin: 27px 0 45px; }
-.welcome-composition { min-width: 0; position: relative; z-index: 1; transform-origin: left top; will-change: transform; }
+.welcome-composition { min-width: 0; position: relative; z-index: 1; transform-origin: left top; will-change: transform; contain: layout style; }
 .welcome-composition.intro-overlay { position: fixed; inset: 0; z-index: 25; display: grid; place-content: center; padding: 40px; background: transparent; transform-origin: center; transform: translateZ(0); pointer-events: none; }
-.welcome-composition.intro-overlay .welcome-title { justify-content: center; font-size: min(48vw, 65vh); }
+.welcome-composition.intro-overlay .welcome-title { justify-content: center; font-size: min(48vw, 65vh); transform: translateZ(0); }
 .welcome-composition.intro-overlay .welcome-caption { justify-content: center; }
+.welcome-composition.intro-overlay .welcome-title { animation: welcome-glow 6s ease-in-out infinite; }
+.welcome-composition.intro-overlay .welcome-ink { animation: welcome-sheen 7s ease-in-out infinite; }
 .welcome-composition.intro-settling { transform-origin: center; transition: transform .72s cubic-bezier(.22, .75, .2, 1); }
 .welcome-composition.intro-overlay::after {
   content: 'SWIPE TO EXPLORE ↓';
@@ -929,6 +931,18 @@ thead { color: var(--green); }
   .site-footer p { order: 3; flex-basis: 100%; font-size: 11.5px; }
   .site-footer .back-top { margin-left: auto; font-size: 11.5px; }
   .footer-separator { margin-inline: 8px; }
+}
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 760px) {
+    .welcome-composition.intro-overlay .welcome-title {
+      animation: none;
+      filter: drop-shadow(0 0 10px #b6ff3b66) drop-shadow(0 0 24px #b6ff3b2b);
+    }
+    .welcome-composition.intro-overlay .welcome-ink {
+      animation: none;
+      background-position: 50% 0;
+    }
+  }
 }
 @media (max-width: 359px) {
   .container { width: calc(100% - 32px); }

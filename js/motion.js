@@ -101,7 +101,7 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
 
   function paintIntro() {
     const welcomeScale = 1.0 - introProgress * 0.7;
-    welcome.style.transform = `scale(${welcomeScale})`;
+    welcome.style.transform = `translate3d(0, 0, 0) scale3d(${welcomeScale}, ${welcomeScale}, 1)`;
     welcome.style.opacity = '1';
     welcome.style.pointerEvents = mobileQuery.matches ? 'none' : (introActive ? 'auto' : 'none');
   }
@@ -328,14 +328,17 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
       } else {
         paintIntro();
       }
+      return;
     } else if (introActive) {
       paintIntro();
     }
     if (visibleScenes.has(hero)) {
       const bounds = hero.getBoundingClientRect();
       const progress = clamp(-bounds.top / Math.max(bounds.height, 1));
-      artifact.style.transform = `translate3d(0, ${progress * (mobile ? 12 : 55)}px, 0) rotate(${progress * (mobile ? 1 : 4)}deg) scale(${1 + progress * .035})`;
-      hero.style.setProperty('--layer-spread', `${progress * (mobile ? 8 : 22)}px`);
+      if (!(mobile && introActive)) {
+        artifact.style.transform = `translate3d(0, ${progress * (mobile ? 12 : 55)}px, 0) rotate(${progress * (mobile ? 1 : 4)}deg) scale(${1 + progress * .035})`;
+        hero.style.setProperty('--layer-spread', `${progress * (mobile ? 8 : 22)}px`);
+      }
     }
     if (visibleScenes.has(compilerScene) && storyEnabled) {
       const bounds = compilerScene.getBoundingClientRect();
