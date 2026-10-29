@@ -10,6 +10,30 @@ export function scramble(targetElement, targetText, duration = 280) {
     return;
   }
   if (targetElement._scrambleFrame) cancelAnimationFrame(targetElement._scrambleFrame);
+  if (targetElement._scrambleCleanup) targetElement._scrambleCleanup();
+  const layoutElement = targetElement.nodeType === Node.ELEMENT_NODE ? targetElement : targetElement.parentElement;
+  const originalWidth = layoutElement?.style.width ?? '';
+  const originalWhiteSpace = layoutElement?.style.whiteSpace ?? '';
+  if (layoutElement) {
+    const measure = layoutElement.cloneNode(false);
+    measure.textContent = targetText;
+    measure.style.position = 'fixed';
+    measure.style.width = 'max-content';
+    measure.style.visibility = 'hidden';
+    measure.style.whiteSpace = 'nowrap';
+    document.body.append(measure);
+    const targetWidth = measure.getBoundingClientRect().width;
+    measure.remove();
+    layoutElement.style.width = `${Math.ceil(Math.max(layoutElement.getBoundingClientRect().width, targetWidth))}px`;
+    layoutElement.style.whiteSpace = 'nowrap';
+  }
+  const restoreLayout = () => {
+    if (!layoutElement) return;
+    layoutElement.style.width = originalWidth;
+    layoutElement.style.whiteSpace = originalWhiteSpace;
+    delete targetElement._scrambleCleanup;
+  };
+  targetElement._scrambleCleanup = restoreLayout;
   const length = targetText.length;
   const start = performance.now();
 
@@ -33,6 +57,7 @@ export function scramble(targetElement, targetText, duration = 280) {
     } else {
       targetElement.textContent = targetText;
       delete targetElement._scrambleFrame;
+      restoreLayout();
     }
   }
   targetElement._scrambleFrame = requestAnimationFrame(step);
