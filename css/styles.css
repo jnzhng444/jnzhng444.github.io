@@ -182,6 +182,11 @@ svg { display: block; max-width: 100%; }
 .welcome-composition.intro-overlay .welcome-ink { animation: welcome-sheen 7s ease-in-out infinite; }
 .welcome-composition.intro-settling { transform-origin: center; transition: transform .72s cubic-bezier(.22, .75, .2, 1); }
 .intro-scroll-indicator { display: none; }
+.welcome-composition:not(.intro-overlay) .intro-scroll-indicator,
+html:not(.intro-active) .intro-scroll-indicator,
+html.intro-settling .intro-scroll-indicator {
+  display: none !important;
+}
 .welcome-composition.intro-overlay .intro-scroll-indicator {
   position: absolute;
   left: 50%;
