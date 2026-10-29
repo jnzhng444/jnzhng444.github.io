@@ -949,20 +949,12 @@ thead { color: var(--green); }
 }
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 760px) {
-    html.intro-scrolling .welcome-composition.intro-overlay .welcome-title {
-      filter: none;
-    }
-    html.intro-scrolling .welcome-composition.intro-overlay .welcome-ink {
-      background: none;
-      color: var(--green);
-    }
     .welcome-composition.intro-overlay .welcome-title {
-      animation: none;
+      animation: welcome-glow 6s ease-in-out infinite;
       filter: drop-shadow(0 0 10px #b6ff3b66) drop-shadow(0 0 24px #b6ff3b2b);
     }
     .welcome-composition.intro-overlay .welcome-ink {
-      animation: none;
-      background-position: 50% 0;
+      animation: welcome-sheen 7s ease-in-out infinite;
     }
   }
 }
