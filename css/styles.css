@@ -188,6 +188,7 @@ html.intro-settling .intro-scroll-indicator {
   display: none !important;
 }
 .welcome-composition.intro-overlay .intro-scroll-indicator {
+  display: block;
   position: absolute;
   left: 50%;
   bottom: 30px;
@@ -806,7 +807,6 @@ thead { color: var(--green); }
   .welcome-caption > span:first-child { font-size: 10px; }
   .welcome-caption > span:last-child { font-size: 10.5px; max-width: none; }
   .hairline { width: 29px; }
-  .welcome-composition.intro-overlay .intro-scroll-indicator { display: block; }
   .hero-introduction { order: 2; display: block; padding-top: 0; margin-top: 36px; }
   .hero-name { font-size: clamp(27px, 7.2vw, 42px); line-height: 1.2; }
   .hero-role { font-size: 14px; margin-top: 9px; }
