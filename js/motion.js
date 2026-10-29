@@ -43,7 +43,6 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   const root = document.documentElement;
   const storyQuery = matchMedia('(min-width: 1000px) and (min-height: 760px)');
   const mobileQuery = matchMedia('(max-width: 760px)');
-  const motionButton = document.querySelector('#motion-toggle');
   const hero = document.querySelector('.hero');
   const artifact = document.querySelector('.artifact-parallax');
   const chipTilt = document.querySelector('.chip-tilt');
@@ -59,7 +58,6 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   const throttleBar = document.querySelector('.throttle-bar > span');
   const gearEl = document.querySelector('.gear-value');
 
-  let manuallyPaused = false;
   // The site owner's explicit preference: start animated on every visit.
   // Manual pause is visit-local; old stored preferences and OS reduction do not
   // change this default. Offscreen/background suspension still saves work.
@@ -335,8 +333,8 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   }
 
   function updateMotion() {
-    if (manuallyPaused || document.hidden) root.classList.add('intro-complete');
-    enabled = !manuallyPaused && !document.hidden;
+    if (document.hidden) root.classList.add('intro-complete');
+    enabled = !document.hidden;
     welcome.classList.toggle('intro-overlay', enabled && introActive);
     if (!enabled) {
       welcome.style.removeProperty('transform');
@@ -349,26 +347,14 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
     root.classList.add('motion-enabled', 'motion-forced');
     root.classList.toggle('motion-paused', !enabled);
     root.classList.toggle('scroll-story', storyEnabled);
-    motionButton.hidden = false;
-    motionButton.disabled = false;
-    motionButton.setAttribute('aria-pressed', String(manuallyPaused));
-    const label = manuallyPaused ? 'Resume animations' : 'Pause animations';
-    motionButton.setAttribute('aria-label', label);
-    motionButton.title = label;
-    motionButton.innerHTML = `<span aria-hidden="true">${manuallyPaused ? '▷' : 'Ⅱ'}</span><span>${manuallyPaused ? 'Motion paused' : 'Motion on'}</span>`;
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
-    onScrollMode(storyEnabled && !manuallyPaused);
+    onScrollMode(storyEnabled);
     document.dispatchEvent(new Event('motion-statechange'));
     schedulePaint();
     scheduleTilt();
     updateTelemetry();
   }
-
-  motionButton.addEventListener('click', () => {
-    manuallyPaused = !manuallyPaused;
-    updateMotion();
-  });
 
   storyQuery.addEventListener('change', updateMotion);
   document.addEventListener('visibilitychange', updateMotion);
@@ -391,7 +377,7 @@ export function initMotion({ onCompilerProgress, onScrollMode }) {
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      if (!manuallyPaused) entry.target.classList.add('is-revealed');
+      entry.target.classList.add('is-revealed');
       revealObserver.unobserve(entry.target);
     });
   }, { threshold: .12 });

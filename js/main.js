@@ -251,5 +251,4 @@ import('./motion.js').then(({ initMotion }) => {
   document.documentElement.classList.remove('motion-enabled', 'motion-forced', 'scroll-story');
   document.documentElement.classList.remove('intro-active', 'intro-settling');
   document.querySelector('.welcome-composition')?.classList.remove('intro-overlay');
-  $('#motion-toggle').hidden = true;
 });
