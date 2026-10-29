@@ -951,6 +951,7 @@ thead { color: var(--green); }
   @media (max-width: 760px) {
     html.intro-scrolling .welcome-composition.intro-overlay .welcome-title {
       filter: none;
+      text-shadow: 0 0 10px #b6ff3b55;
     }
     html.intro-scrolling .welcome-composition.intro-overlay .welcome-ink {
       background: none;
@@ -958,7 +959,7 @@ thead { color: var(--green); }
     }
     .welcome-composition.intro-overlay .welcome-title {
       animation: none;
-      filter: drop-shadow(0 0 10px #b6ff3b66) drop-shadow(0 0 24px #b6ff3b2b);
+      filter: drop-shadow(0 0 8px #b6ff3b55);
     }
     .welcome-composition.intro-overlay .welcome-ink {
       animation: none;
