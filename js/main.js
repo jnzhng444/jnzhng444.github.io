@@ -2,6 +2,7 @@ import { featuredMarkup, skillsMarkup } from './render.js';
 import { compilerStages } from './compiler.js';
 import { scheduleView } from './scheduler-view.js';
 import { featuredProjects } from './data.js';
+import { executionView } from './raytracing.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 
@@ -18,6 +19,14 @@ if (window.location.hash) {
 // Static HTML is already complete. Local data also refreshes it at runtime.
 $('#featured-projects').innerHTML = featuredMarkup();
 $('#skills-list').innerHTML = skillsMarkup();
+
+document.querySelectorAll('[data-execution]').forEach(button => {
+  button.disabled = false;
+  button.addEventListener('click', () => {
+    document.querySelectorAll('[data-execution]').forEach(control => control.setAttribute('aria-pressed', String(control === button)));
+    $('#execution-view').innerHTML = executionView(button.dataset.execution);
+  });
+});
 
 const blockLabels = [
   ['let unused = 9;', 'input', 'signal = input + 1', 'emit(signal)'],

@@ -1,5 +1,13 @@
 # Verification record
 
+## Ray Tracing replacement — 2026-10-30
+
+MPointer was replaced by Ray Tracing, now project 01 and the initial selected panel. Eight projects remain, consecutively numbered. Added a schematic ray scene and five selectable execution maps, preserving the current site animations and intro.
+
+Verified with `.review/raytracing-qa.mjs`: all five models at 1440, 768, 390 and 320 px, no document overflow; ten axe audits at desktop/mobile with zero detected WCAG 2 A/AA and 2.1 AA violations; keyboard selection, retained model choice after switching projects, real ray animation, hidden-tab/offscreen suspension, compiler controls and EDF output. All project content and model descriptions remain in the no-JavaScript snapshot. With the motion module intentionally blocked, model controls still work. No page errors or failed requests. Syntax, snapshot consistency and whitespace checks passed. Fixed the existing marquee's marginal text contrast from #777 to #888 during the audit.
+
+Evidence is local/ignored: `.review/raytracing-qa-results.json`, `.review/raytracing-{width}.png`, and `.review/raytracing-project-desktop.png` / `.review/raytracing-diagram.png`. Desktop and mobile screenshots were visually inspected. The C++ renderer and performance benchmarks were reviewed as source material, not compiled or executed as part of the website change.
+
 Verified locally on **2026-10-28** with Chrome (headless), Playwright Core 1.56.1, axe-core 4.10.3, Node.js 24.12.0 and Python 3.14.5. Browser tooling was downloaded into ignored `.review/` solely for QA; it is not a site dependency.
 
 ## Welcome glow

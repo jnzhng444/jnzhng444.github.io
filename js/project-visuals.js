@@ -1,4 +1,5 @@
 // Original explanatory drawings. These are schematics, not live hardware traces.
+import { rayTracingVisual } from './raytracing.js';
 const pipeline = () => `<div class="processor-pipeline" aria-label="Five pipeline stages: fetch, decode, execute, memory, write-back">${[
   ['IF', 'Fetch'], ['ID', 'Decode'], ['EX', 'Execute'], ['MEM', 'Memory'], ['WB', 'Write-back'],
 ].map(([code, label]) => `<div><strong>${code}</strong><span>${label}</span></div>`).join('')}</div>`;
@@ -18,14 +19,6 @@ function chachaVisual() {
     ['Mix in assembly', 'Quarter-rounds combine addition modulo 2³², XOR, and bit rotation. Column and diagonal rounds diffuse the state.'],
     ['Check the result', 'The C harness uses RFC 8439 vectors. QEMU and GDB support inspecting the bare-metal assembly implementation.'],
   ])}`, 'Conceptual state and data flow, not encryption running in the browser. No secret key or measured output is shown.');
-}
-
-function memoryVisual() {
-  return frame('MPOINTER / REFERENCE LIFETIME', `<svg class="concept-drawing" viewBox="0 0 480 330" role="img" aria-label="Two managed pointers refer to one allocation with reference count two. After both references are released, the count reaches zero and the allocation can be reclaimed."><g font-family="IBM Plex Mono,monospace" font-size="17" text-anchor="middle"><g stroke="#777" fill="#171717"><rect x="25" y="45" width="130" height="55"/><rect x="25" y="140" width="130" height="55"/><rect x="280" y="76" width="175" height="100"/></g><g class="diagram-flow" stroke="#b6ff3b" fill="none" stroke-width="2"><path d="M155 72h55v36h70m-9-6 9 6-9 6M155 167h55v-25h70m-9-6 9 6-9 6"/><path d="M368 176v60m-6-9 6 9 6-9"/></g><g fill="#f5f5f0"><text x="90" y="79">pointer A</text><text x="90" y="174">pointer B</text><text x="368" y="111">allocation</text><text x="368" y="148" fill="#b6ff3b">refs = 2</text><text x="130" y="261">release A + B</text></g><rect x="280" y="240" width="175" height="60" fill="none" stroke="#aaa" stroke-dasharray="6 6"/><text x="368" y="276" fill="#f5f5f0">refs = 0</text></g></svg>${steps([
-    ['Share an allocation', 'Managed pointer copies refer to the same allocation while reference tracking records their use.'],
-    ['Release references', 'When no managed references remain, the allocation becomes eligible for reclamation. This is a simplified lifecycle.'],
-    ['Use it in structures', 'Lists and sorting routines exercise the library; Google Test provides a dedicated test suite.'],
-  ])}`, 'Conceptual reference counting, not a live allocation trace. The diagram does not imply support for collecting reference cycles.');
 }
 
 function signalsVisual() {
@@ -48,4 +41,4 @@ function paradigmsVisual() {
   ])}`, 'Original geometric illustration, not gameplay footage or a live connection. Moving markers explain communication; the game itself runs as a desktop client and Java server.');
 }
 
-export const projectVisuals = { chacha: chachaVisual, mpointer: memoryVisual, signals: signalsVisual, architecture: architectureVisual, paradigms: paradigmsVisual };
+export const projectVisuals = { raytracing: rayTracingVisual, chacha: chachaVisual, signals: signalsVisual, architecture: architectureVisual, paradigms: paradigmsVisual };

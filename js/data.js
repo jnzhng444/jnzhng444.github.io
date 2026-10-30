@@ -1,7 +1,18 @@
-// Content source. Repository links were checked on 2026-10-28; see docs/SOURCES.md.
+// Content source. Ray tracing reviewed 2026-10-30; see docs/SOURCES.md.
 export const featuredProjects = [
   {
-    id: 'compiler', number: '01', tabLabel: 'Compiler & RISC', category: 'COMPILERS / RISC PROCESSOR SYSTEMS', year: '2026',
+    id: 'raytracing', number: '01', tabLabel: 'Ray Tracing', category: 'COMPUTER ARCHITECTURE II / EXECUTION MODELS', year: '2026',
+    title: 'Follow the light. Rethink the execution.',
+    name: 'Ray Tracing & Multithreaded Execution Models',
+    description: 'A CPU path tracer in C++17 comparing sequential, Fine-Grained, Coarse-Grained, SMT, and CMP execution over the same tile-based workload. Multiple samples and bounces render matte, metallic, and glass spheres, with SDL2 presenting the completed image.',
+    contribution: 'I developed the Ray Tracing problem within a team project covering four workloads. My work focused on the renderer and its execution models, connecting tile scheduling, CPU topology, validation, and performance analysis.',
+    technologies: ['C++17', 'CPU path tracing', 'Multithreading / CPU affinity', 'SDL2', 'Linux perf', 'Python / Bash'],
+    details: 'The scene, camera, tile partition, and pixel sampling are shared across all five models. Fine-Grained uses cooperative pixel quanta on one OS thread; Coarse-Grained models blocking and resumption. SMT and CMP use workers, an atomic tile index, and topology-aware CPU affinity. Scripts analyze runtime, speedup, efficiency, scalability, and Amdahl behavior while separating algorithm timings from whole-process perf measurements. The other three workloads are team context, not my individual contribution.',
+    repo: 'https://github.com/Fabbbri/fgonzalez_a2_2026_s2/tree/master/ray%20tracing', repoLabel: 'Explore Ray Tracing & execution models',
+    collaboration: 'Team project · My contribution: Ray Tracing & execution models',
+  },
+  {
+    id: 'compiler', number: '02', tabLabel: 'Compiler & RISC', category: 'COMPILERS / RISC PROCESSOR SYSTEMS', year: '2026',
     title: 'From code to a RISC system.',
     name: 'Custom Compiler and RISC Processor System',
     description: 'An integrated language, compiler, and processor project targeting the custom Craft21 architecture. Programs travel from source code through compiler optimizations to a five-stage RISC pipeline with L1/L2 caches.',
@@ -12,7 +23,7 @@ export const featuredProjects = [
     collaboration: 'Team project · Compiler development & processor integration',
   },
   {
-    id: 'scheduler', number: '02', tabLabel: 'Real-time systems', category: 'EMBEDDED / REAL-TIME SYSTEMS', year: '2026',
+    id: 'scheduler', number: '03', tabLabel: 'Real-time systems', category: 'EMBEDDED / REAL-TIME SYSTEMS', year: '2026',
     title: 'The right task. On time.',
     name: 'Heterogeneous Real-Time Scheduling System',
     description: 'Coordinating periodic and sporadic work across a Linux host, an ESP32, and a Raspberry Pi Pico H, with deadlines as a first-class constraint.',
@@ -23,7 +34,7 @@ export const featuredProjects = [
     collaboration: 'Team project · Systems development',
   },
   {
-    id: 'garage', number: '03', tabLabel: 'F1 Garage', category: 'FULL-STACK / DATA SYSTEMS', year: '2026',
+    id: 'garage', number: '04', tabLabel: 'F1 Garage', category: 'FULL-STACK / DATA SYSTEMS', year: '2026',
     title: 'Behind every race, a system.',
     name: 'F1 Garage Manager',
     description: 'A full-stack workspace for managing racing teams, vehicles, inventory, and race simulations. Connecting operational workflows with a consistent data model.',
@@ -34,7 +45,7 @@ export const featuredProjects = [
     collaboration: 'Team project · Full-stack development',
   },
   {
-    id: 'chacha', number: '04', tabLabel: 'ChaCha20', category: 'CRYPTOGRAPHY / RISC-V ASSEMBLY', year: '',
+    id: 'chacha', number: '05', tabLabel: 'ChaCha20', category: 'CRYPTOGRAPHY / RISC-V ASSEMBLY', year: '',
     title: 'Small instructions. A stream of bits.',
     name: 'ChaCha20 on RISC-V',
     description: 'A bare-metal implementation of the ChaCha20 stream cipher in RV32IM assembly. A C harness connects the low-level routines to RFC 8439 test vectors, with QEMU and GDB providing an inspectable execution environment.',
@@ -43,17 +54,6 @@ export const featuredProjects = [
     details: 'The code separates the quarter-round, inner block, block generation, and encryption routines. Addition, XOR, and rotation mix a 16-word state into a keystream that is XORed with the input. The repository includes RFC test vectors; this portfolio does not execute the cipher or claim production security or sole authorship of every component.',
     repo: 'https://github.com/jnzhng444/chacha20', repoLabel: 'Explore ChaCha20',
     collaboration: 'Project participation · Assembly & testing',
-  },
-  {
-    id: 'mpointer', number: '05', tabLabel: 'MPointer', category: 'MEMORY / DATA STRUCTURES', year: '',
-    title: 'Follow the references.',
-    name: 'MPointer — Managed Pointers in C++',
-    description: 'A C++17 library exploring managed pointers, reference counting, and a collector. Doubly linked lists and sorting algorithms put the memory model to work beyond isolated pointer examples.',
-    contribution: 'Participated in the MPointer library project, working with a C++ codebase that connects managed pointers and reference tracking with reusable data structures and Google Test suites.',
-    technologies: ['C++17', 'Reference counting', 'CMake', 'Google Test'],
-    details: 'MPointer wraps a managed allocation while MPointerGC tracks references. Copying and releasing references changes whether an allocation remains reachable through these pointers. The repository also includes doubly linked lists, Bubble Sort, Insertion Sort, and Quick Sort. The diagram illustrates reference counting; it is not a live memory trace or a claim that reference cycles are collected.',
-    repo: 'https://github.com/jnzhng444/MPointer', repoLabel: 'Explore MPointer',
-    collaboration: 'Project participation · Memory & data structures',
   },
   {
     id: 'signals', number: '06', tabLabel: 'Signals & control', category: 'SIGNAL PROCESSING / EMBEDDED CONTROL', year: '2026',

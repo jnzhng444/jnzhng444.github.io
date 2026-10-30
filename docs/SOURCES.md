@@ -1,6 +1,16 @@
 # Content sources and decisions
 
-Reviewed on **2026-10-28**. The site ships its content locally in `js/data.js`, with complete HTML snapshots; it makes no GitHub API calls at runtime.
+Initial sources reviewed on **2026-10-28**; Ray Tracing added and reviewed on **2026-10-30**. The site ships its content locally in `js/data.js`, with complete HTML snapshots; it makes no GitHub API calls at runtime.
+
+## Ray Tracing replaces MPointer
+
+At the user's request, MPointer was removed from the published projects and its diagram removed. Ray Tracing is now the first and initially selected project; the total remains eight. Earlier MPointer references below are historical source records.
+
+Reviewed [Arquitectura de Computadores II](https://github.com/Fabbbri/fgonzalez_a2_2026_s2) and its [Ray Tracing implementation](https://github.com/Fabbbri/fgonzalez_a2_2026_s2/tree/master/ray%20tracing) at commit `b9abe7f06d8cd5436c6be73d74fc66d1f97f3291`, branch `master`. Evidence: root README, `ray tracing/README.md`, `ray tracing/docs/diseno.md`, and `src/execution/fine.cpp`, `coarse.cpp`, `parallel.cpp`. The user explicitly identifies Ray Tracing as their contribution among four team workloads; the other workloads are context only.
+
+The CPU C++17 renderer uses sampled, bouncing paths through matte, metallic and glass spheres, shares scene/camera/tile partition across models, and presents the completed image with SDL2. Five models are implemented: sequential baseline; cooperative Fine-Grained on **one real OS thread**, taking up to K complete pixels per turn; Coarse-Grained with modeled blocking/resumption and optional bounded workers; SMT workers assigned according to logical topology; CMP workers on distinct physical cores. Selecting the SMT policy alone does not enable hardware SMT.
+
+The browser's animated rays, tile blocks and five selectable maps are original explanatory graphics, not a renderer port, hardware trace or benchmark. Block widths and animation periods do not claim measured speedups. Existing benchmark and perf infrastructure supports runtime, speedup, efficiency, scalability and Amdahl analysis, but no numeric performance result was added to the portfolio or independently reproduced.
 
 ## Personal identity redesign
 

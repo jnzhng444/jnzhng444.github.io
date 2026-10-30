@@ -23,7 +23,8 @@ Abrí **http://127.0.0.1:8000/**. Usá un servidor HTTP porque JavaScript emplea
 - `index.html`: presentación, About, experiencia, idiomas, certificaciones y contacto; metadatos de buscadores y redes.
 - `js/data.js`: fuente central de los ocho proyectos y las habilidades. Cada proyecto define descripción, aporte, tecnologías, detalles, enlace y etiqueta corta del selector (`tabLabel`). Para agregar otro, añadí una entrada a `featuredProjects` y su visual en `projectVisuals`.
 - `js/render.js`: composiciones de los proyectos, demostraciones y habilidades; compartidas por el navegador y la copia HTML estática.
-- `js/project-visuals.js`: diagramas originales y explicaciones de ChaCha20, MPointer, señales/control, FPGA/RISC-V, Tarea4Paradigmas y el contexto del compilador dentro del sistema Craft21. Las señales y los indicadores animados son ilustraciones conceptuales, no simulaciones ejecutables.
+- `js/project-visuals.js`: diagramas originales y explicaciones de ChaCha20, señales/control, FPGA/RISC-V, Tarea4Paradigmas y el contexto del compilador dentro del sistema Craft21. Las señales y los indicadores animados son ilustraciones conceptuales, no simulaciones ejecutables.
+- `js/raytracing.js`: escena ilustrativa de Ray Tracing y selector de los cinco modelos de ejecución: Sequential, Fine-Grained, Coarse-Grained, SMT y CMP. Los mapas explican orden y distribución del trabajo; no representan tiempos medidos.
 - `js/compiler.js`: etapas y ejemplos didácticos del compilador.
 - `js/scheduler.js`: algoritmo de la demostración RMS/EDF, exportado para pruebas. Si cambiás las tareas o el horizonte, actualizá también las explicaciones y pruebas; el gráfico y la tabla se calculan a partir del modelo.
 - `js/scheduler-view.js`: gráfico SVG y tabla textual calculados desde el mismo modelo RMS/EDF.
@@ -58,6 +59,7 @@ node --check js/compiler.js
 node --check js/scheduler.js
 node --check js/render.js
 node --check js/project-visuals.js
+node --check js/raytracing.js
 node --check js/scheduler-view.js
 node --check js/motion.js
 node scripts/sync-content.mjs --check
@@ -65,7 +67,7 @@ node scripts/sync-content.mjs --check
 
 El sitio incluye navegación móvil por teclado, skip link, controles con estado accesible, tabla textual de calendarización, copia de correo con confirmación, pausa temporal en la cabecera y animaciones activas por defecto. El scroll es nativo. Las animaciones ambientales se pausan fuera de pantalla y al ocultar la pestaña; el trabajo de parallax solo ocurre al desplazarse o redimensionar, agrupado en un frame solicitado. No hay un renderizador 3D continuo ni formulario.
 
-Los ocho proyectos comparten una sección: **Compiler & RISC**, **Real-time systems**, **F1 Garage**, **ChaCha20**, **MPointer**, **Signals & control**, **FPGA & RISC-V** y **C + Java game** (Tarea4Paradigmas). Ya no hay un workbench separado. Cada selección muestra su contenido, fondo y diagrama o demo; conserva las etapas, el algoritmo y los detalles abiertos al cambiar. El selector permanece disponible mientras se lee el proyecto y se desplaza horizontalmente en pantallas pequeñas. Se puede usar con clic, toque, botones anterior/siguiente, flechas izquierda/derecha e Inicio/Fin; Tab avanza hacia el panel seleccionado.
+Los ocho proyectos comparten una sección: **Ray Tracing**, **Compiler & RISC**, **Real-time systems**, **F1 Garage**, **ChaCha20**, **Signals & control**, **FPGA & RISC-V** y **C + Java game** (Tarea4Paradigmas). Ray Tracing aparece primero y seleccionado al cargar; reemplaza a MPointer. El aporte personal se limita al problema de Ray Tracing y sus modelos de ejecución dentro del proyecto de cuatro problemas. Cada selección muestra su contenido, fondo y diagrama o demo; conserva las etapas, el algoritmo y los detalles abiertos al cambiar. El selector permanece disponible mientras se lee el proyecto y se desplaza horizontalmente en pantallas pequeñas. Se puede usar con clic, toque, botones anterior/siguiente, flechas izquierda/derecha e Inicio/Fin; Tab avanza hacia el panel seleccionado.
 
 La demo del compilador sigue compacta: reproduce sus seis etapas cada 3,4 segundos solo mientras está visible y el movimiento está habilitado. Elegir una etapa detiene la reproducción; **Play stages / Pause stages** permite retomarla o pausarla. La secuencia larga ligada al scroll sigue desactivada. Los bloques representan ejemplos didácticos, no el compilador real. La demo RMS/EDF conserva el cálculo original. Sin JavaScript o al imprimir, los ocho proyectos permanecen visibles como contenido continuo.
 
